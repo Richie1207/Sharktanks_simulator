@@ -33,13 +33,13 @@ if rol == "Pizarra Principal (Docente/Equipo)":
     # PANTALLA DE VICTORIA
     if state["deal_closed"]:
         st.balloons()
-        # Música de victoria
-        try:
-            st.audio("ganar.mp3", format="audio/mpeg", autoplay=True)
-        except:
-            pass
-            
         st.success(f"🎉 ¡LO CONSEGUISTE! ESTÁS DENTRO 🎉\n\nAcuerdo cerrado con el inversor: **{state['ganador']}**.")
+        
+        st.markdown("🔊 **Música de Éxito (Haz clic en Play):**")
+        try:
+            st.audio("ganar.mp3", format="audio/mpeg")
+        except:
+            st.warning("No se pudo cargar el archivo ganar.mp3")
         
         if st.button("Reiniciar Simulador para otro equipo"):
             state["deal_closed"] = False
@@ -49,11 +49,11 @@ if rol == "Pizarra Principal (Docente/Equipo)":
             
     # PANTALLA NORMAL DE EXPOSICIÓN
     else:
-        # Música de tensión
+        st.markdown("🎵 **Ambiente de Tensión (Haz clic en Play para reproducir la música de fondo):**")
         try:
-            st.audio("suspenso.mp3", format="audio/mpeg", autoplay=True)
+            st.audio("suspenso.mp3", format="audio/mpeg")
         except:
-            pass
+            st.warning("No se pudo cargar el archivo suspenso.mp3")
             
         col1, col2 = st.columns([1, 1])
         
