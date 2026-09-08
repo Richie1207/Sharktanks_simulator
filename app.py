@@ -1,5 +1,5 @@
 import streamlit as st
-import streamlit.components.v1 as components
+import time
 
 # Configuración inicial
 st.set_page_config(page_title="Shark Tank Interactivo", layout="wide", page_icon="🦈")
@@ -35,15 +35,12 @@ if rol == "Pizarra Principal (Docente/Equipo)":
         st.balloons()
         st.success(f"🎉 ¡LO CONSEGUISTE! ESTÁS DENTRO 🎉\n\nAcuerdo cerrado con el inversor: **{state['ganador']}**.")
         
-        # Reproducción automática e inmediata de la música de victoria
-        components.html(
-            """
-            <audio autoplay style="display:none;">
-              <source src="./app/static/Ganar.mp3" type="audio/mpeg">
-            </audio>
-            """,
-            height=0
-        )
+        # Reproducción automática nativa de Streamlit para el éxito
+        try:
+            st.audio("Ganar.mp3", autoplay=True)
+        except TypeError:
+            # Compatibilidad si la versión de Streamlit es anterior
+            st.audio("Ganar.mp3")
         
         if st.button("Reiniciar Simulador para otro equipo"):
             state["deal_closed"] = False
@@ -51,19 +48,10 @@ if rol == "Pizarra Principal (Docente/Equipo)":
             state["ofertas"] = {}
             st.rerun()
             
-    # PANTALLA NORMAL DE EXPOSICIÓN (Requiere Play manual para el discurso)
+    # PANTALLA NORMAL DE EXPOSICIÓN (Reproductor nativo limpio para el speech)
     else:
-        components.html(
-            """
-            <div style="background: #0E2A35; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #1E4652; margin-bottom: 10px;">
-                <p style="color: #9FBAC2; font-family: sans-serif; margin: 0 0 6px 0; font-size: 13px;">🎶 Ambiente de Tensión (Haz clic en Play para activar el pitch)</p>
-                <audio controls loop style="width: 80%; height: 35px;">
-                  <source src="./app/static/Suspenso.mp3" type="audio/mpeg">
-                </audio>
-            </div>
-            """,
-            height=85
-        )
+        st.markdown("🎵 **Ambiente de Tensión (Pulsa Play para iniciar el fondo musical):**")
+        st.audio("Suspenso.mp3")
             
         col1, col2 = st.columns([1, 1])
         
@@ -132,7 +120,7 @@ elif rol == "Tiburón (Inversor - Móvil)":
             st.markdown("---")
             st.subheader("B. Asistente de Decisión Automático")
             if state["tir"] >= state["wacc"] + 5:
-                    st.success("🤖 **RECOMENDACIÓN: INVERTIR.** La TIR supera ampliamente el WACC.")
+                st.success("🤖 **RECOMENDACIÓN: INVERTIR.** La TIR supera ampliamente el WACC.")
             elif state["tir"] >= state["wacc"]:
                 st.warning("🤖 **RECOMENDACIÓN: PRECAUCIÓN.** La TIR cubre el WACC, pero el margen es mínimo.")
             else:
