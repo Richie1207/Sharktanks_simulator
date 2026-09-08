@@ -35,14 +35,17 @@ if rol == "Pizarra Principal (Docente/Equipo)":
         st.balloons()
         st.success(f"🎉 ¡LO CONSEGUISTE! ESTÁS DENTRO 🎉\n\nAcuerdo cerrado con el inversor: **{state['ganador']}**.")
         
-        # Audio de éxito limpio y oculto
+        # Reproductor limpio y elegante para el éxito
         components.html(
             """
-            <audio autoplay>
-              <source src="./app/static/Ganar.mp3" type="audio/mpeg">
-            </audio>
+            <div style="background: #123543; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #E8B94B;">
+                <p style="color: #F2EEE3; font-family: sans-serif; margin: 0 0 8px 0; font-size: 14px;">🎵 Reproducir Música de Éxito</p>
+                <audio controls autoplay style="width: 100%;">
+                  <source src="./app/static/Ganar.mp3" type="audio/mpeg">
+                </audio>
+            </div>
             """,
-            height=0
+            height=90
         )
         
         if st.button("Reiniciar Simulador para otro equipo"):
@@ -53,14 +56,17 @@ if rol == "Pizarra Principal (Docente/Equipo)":
             
     # PANTALLA NORMAL DE EXPOSICIÓN
     else:
-        # Audio de suspenso limpio y oculto (con loop)
+        # Reproductor limpio y elegante para la tensión
         components.html(
             """
-            <audio autoplay loop>
-              <source src="./app/static/Suspenso.mp3" type="audio/mpeg">
-            </audio>
+            <div style="background: #0E2A35; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #1E4652; margin-bottom: 10px;">
+                <p style="color: #9FBAC2; font-family: sans-serif; margin: 0 0 6px 0; font-size: 13px;">🎶 Ambiente de Tensión (Haz clic en Play para activar)</p>
+                <audio controls loop style="width: 80%; height: 35px;">
+                  <source src="./app/static/Suspenso.mp3" type="audio/mpeg">
+                </audio>
+            </div>
             """,
-            height=0
+            height=85
         )
             
         col1, col2 = st.columns([1, 1])
