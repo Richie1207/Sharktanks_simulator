@@ -30,22 +30,19 @@ rol = st.sidebar.radio("Selecciona tu rol para entrar:", ["Pizarra Principal (Do
 if rol == "Pizarra Principal (Docente/Equipo)":
     st.title("📊 Pizarra Principal - Proyecto en Evaluación")
     
-    # PANTALLA DE VICTORIA
+    # PANTALLA DE VICTORIA (Suena Automático al pulsar "Aceptar oferta")
     if state["deal_closed"]:
         st.balloons()
         st.success(f"🎉 ¡LO CONSEGUISTE! ESTÁS DENTRO 🎉\n\nAcuerdo cerrado con el inversor: **{state['ganador']}**.")
         
-        # Reproductor limpio y elegante para el éxito
+        # Reproducción automática e inmediata de la música de victoria
         components.html(
             """
-            <div style="background: #123543; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #E8B94B;">
-                <p style="color: #F2EEE3; font-family: sans-serif; margin: 0 0 8px 0; font-size: 14px;">🎵 Reproducir Música de Éxito</p>
-                <audio controls autoplay style="width: 100%;">
-                  <source src="./app/static/Ganar.mp3" type="audio/mpeg">
-                </audio>
-            </div>
+            <audio autoplay style="display:none;">
+              <source src="./app/static/Ganar.mp3" type="audio/mpeg">
+            </audio>
             """,
-            height=90
+            height=0
         )
         
         if st.button("Reiniciar Simulador para otro equipo"):
@@ -54,13 +51,12 @@ if rol == "Pizarra Principal (Docente/Equipo)":
             state["ofertas"] = {}
             st.rerun()
             
-    # PANTALLA NORMAL DE EXPOSICIÓN
+    # PANTALLA NORMAL DE EXPOSICIÓN (Requiere Play manual para el discurso)
     else:
-        # Reproductor limpio y elegante para la tensión
         components.html(
             """
             <div style="background: #0E2A35; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #1E4652; margin-bottom: 10px;">
-                <p style="color: #9FBAC2; font-family: sans-serif; margin: 0 0 6px 0; font-size: 13px;">🎶 Ambiente de Tensión (Haz clic en Play para activar)</p>
+                <p style="color: #9FBAC2; font-family: sans-serif; margin: 0 0 6px 0; font-size: 13px;">🎶 Ambiente de Tensión (Haz clic en Play para activar el pitch)</p>
                 <audio controls loop style="width: 80%; height: 35px;">
                   <source src="./app/static/Suspenso.mp3" type="audio/mpeg">
                 </audio>
@@ -136,7 +132,7 @@ elif rol == "Tiburón (Inversor - Móvil)":
             st.markdown("---")
             st.subheader("B. Asistente de Decisión Automático")
             if state["tir"] >= state["wacc"] + 5:
-                st.success("🤖 **RECOMENDACIÓN: INVERTIR.** La TIR supera ampliamente el WACC.")
+                    st.success("🤖 **RECOMENDACIÓN: INVERTIR.** La TIR supera ampliamente el WACC.")
             elif state["tir"] >= state["wacc"]:
                 st.warning("🤖 **RECOMENDACIÓN: PRECAUCIÓN.** La TIR cubre el WACC, pero el margen es mínimo.")
             else:
