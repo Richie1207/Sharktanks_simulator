@@ -1,5 +1,5 @@
 import streamlit as st
-import time
+import streamlit.components.v1 as components
 
 # Configuración inicial
 st.set_page_config(page_title="Shark Tank Interactivo", layout="wide", page_icon="🦈")
@@ -35,11 +35,15 @@ if rol == "Pizarra Principal (Docente/Equipo)":
         st.balloons()
         st.success(f"🎉 ¡LO CONSEGUISTE! ESTÁS DENTRO 🎉\n\nAcuerdo cerrado con el inversor: **{state['ganador']}**.")
         
-        st.markdown("🔊 **Música de Éxito (Haz clic en Play):**")
-        try:
-            st.audio("Ganar.mp3", format="audio/mpeg")
-        except:
-            st.warning("No se pudo cargar el archivo Ganar.mp3")
+        # Audio de éxito limpio y oculto
+        components.html(
+            """
+            <audio autoplay>
+              <source src="./app/static/Ganar.mp3" type="audio/mpeg">
+            </audio>
+            """,
+            height=0
+        )
         
         if st.button("Reiniciar Simulador para otro equipo"):
             state["deal_closed"] = False
@@ -49,11 +53,15 @@ if rol == "Pizarra Principal (Docente/Equipo)":
             
     # PANTALLA NORMAL DE EXPOSICIÓN
     else:
-        st.markdown("🎵 **Ambiente de Tensión (Haz clic en Play para reproducir la música de fondo):**")
-        try:
-            st.audio("Suspenso.mp3", format="audio/mpeg")
-        except:
-            st.warning("No se pudo cargar el archivo Suspenso.mp3")
+        # Audio de suspenso limpio y oculto (con loop)
+        components.html(
+            """
+            <audio autoplay loop>
+              <source src="./app/static/Suspenso.mp3" type="audio/mpeg">
+            </audio>
+            """,
+            height=0
+        )
             
         col1, col2 = st.columns([1, 1])
         
